@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 
-function App() {
+const siteKey = "af4fc5a3-1ac5-4e6d-819d-324d412a5e9d";
+
+export default function App() {
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    console.log(`Token value: `, token);
+  }, [token]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>HCaptcha Sandbox</h1>
+      <form>
+        <label for="name">Your name: </label>
+        <input type="text" name="name" />
+        <br />
+        <br />
+        <label for="message">Message: </label>
+        <textarea name="message" />
+        <br />
+        <br />
+        <br />
+        <HCaptcha
+          sitekey={siteKey}
+          onVerify={setToken}
+          onExpire={() => setToken(null)}
+        />
+      </form>
     </div>
   );
 }
-
-export default App;
